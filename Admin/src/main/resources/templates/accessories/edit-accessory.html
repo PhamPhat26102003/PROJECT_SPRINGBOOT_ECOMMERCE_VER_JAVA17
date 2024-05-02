@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
+<head th:replace="/fragments :: header">
+
+</head>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul th:replace="fragments :: sideBar"></ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <nav th:replace="fragments :: topBar"></nav>
+            <!-- End of Topbar -->
+
+            <!-- Container fluid -->
+            <div class="container-fluid">
+
+                <form th:action="@{/update-accessories/{id}(id=${accessories.id})}"
+                      method="post" th:object="${accessories}"
+                      style="width:60%; margin-left:auto; margin-right:auto" enctype="multipart/form-data" >
+                    <h3 class="text-center">Update laptop</h3>
+                    <div class="form-group">
+                        <label for="name">NAME LAPTOP</label>
+                        <input type="text" class="form-control" id="name" name="name"
+                               placeholder="Name laptop" th:field="*{name}">
+
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}"
+                             th:errors="*{name}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="specifications">SPECIFICATIONS</label>
+                        <input type="text" class="form-control" id="specifications" name="specifications"
+                               placeholder="Name laptop" th:field="*{specifications}">
+
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('specifications')}"
+                             th:errors="*{specifications}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">PRICE</label>
+                        <input type="text" class="form-control" id="price" name="costPrice"
+                               placeholder="Price" th:field="*{costPrice}">
+
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('costPrice')}"
+                             th:errors="*{costPrice}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-check-label" for="quantity">QUANTITY</label>
+                        <input type="text" class="form-control" id="quantity" name="currentQuantity"
+                               placeholder="Quantity" th:field="*{currentQuantity}">
+
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('currentQuantity')}"
+                             th:errors="*{currentQuantity}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-check-label" for="image">IMAGE</label>
+                        <input type="file" id="image" name="image" th:field="*{image}">
+
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('image')}"
+                             th:errors="*{image}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="nameCategory">NAME CATEGORY</label>
+                        <select class="form-control" id="nameCategory" name="category" th:field="*{category}" multiple>
+                            <option th:each="category : ${categories}"
+                                    th:value="${category.id}"
+                                    th:text="${category.name}"></option>
+                        </select>
+
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('category')}"
+                             th:errors="*{category}">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+
+            </div>
+            <!-- End of container fluid-->
+
+        </div>
+
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer th:replace="fragments :: footer">
+        </footer>
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a th:replace="fragments :: scroll">
+</a>
+
+<!-- Logout Modal-->
+<div th:replace="fragments :: logoutModal">
+</div>
+
+
+<div th:replace="fragments :: script"></div>
+<script th:src="@{/js/categories.js}"></script>
+
+</body>
+
+</html>

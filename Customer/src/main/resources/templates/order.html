@@ -1,0 +1,82 @@
+<!-- /*
+* Bootstrap 5
+* Template Name: Furni
+* Template Author: Untree.co
+* Template URI: https://untree.co/
+* License: https://creativecommons.org/licenses/by/3.0/
+*/ -->
+<!doctype html>
+<html lang="en" xmlns:th = "https://www.thymeleaf.org/">
+<head th:replace="/fragments :: header">
+</head>
+
+	<body>
+
+	<!-- Start Header/Navigation -->
+	<nav th:replace="fragments :: navigation"></nav>
+	<!-- End Header/Navigation -->
+
+		<!-- Start Hero Section -->
+			<div class="hero">
+				<div class="container">
+					<div class="row justify-content-between">
+						<div class="col-lg-5">
+							<div class="intro-excerpt">
+								<h1>Order your products</h1>
+							</div>
+						</div>
+						<div class="col-lg-7">
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		<!-- End Hero Section -->
+	<div class="container p-20" style="margin-bottom: 300px; margin-top: 50px">
+		<div th:if="${success}">
+			<p th:text="${success}" class="text-center text-success" style="font-size:18px"></p>
+		</div>
+		<table class="table">
+			<thead class="thead-light">
+			<tr>
+				<th scope="col">Order Date</th>
+				<th scope="col">Delivery Date</th>
+				<th scope="col">Oder Status</th>
+				<th scope="col">Tax</th>
+				<th scope="col">Total Price</th>
+				<th scope="col">Payment method</th>
+				<th scope="col">Action</th>
+			</tr>
+			</thead>
+			<tbody>
+				<tr th:each="order : ${orders}">
+					<td th:text="${order.dateOrder}"></td>
+					<td th:if="${order.isAccept != null}">
+						<span th:text="${order.deliveryDate}"></span>
+					</td>
+					<td th:if="${order.isAccept == null}">
+						<span th:text="'Waiting...'"></span>
+					</td>
+					<td th:text="${order.orderStatus}"></td>
+					<td>$2.0</td>
+					<td th:text="'$' + ${order.totalPrice + 2.0}"></td>
+					<td>Cash</td>
+					<td>
+						<a th:href="@{/cancel-order/(id=${order.id})}" class="btn btn-cancel">Cancel</a>
+						<a th:href="@{/accept-order/(id=${order.id})}" class="btn btn-primary">Accept</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+
+	<!-- Start Footer Section -->
+	<footer th:replace="fragments :: footer"></footer>
+	<!-- End Footer Section -->
+
+
+	<div th:replace="fragments :: script"></div>
+	</body>
+
+</html>

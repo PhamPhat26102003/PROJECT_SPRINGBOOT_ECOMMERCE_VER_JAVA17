@@ -1,0 +1,85 @@
+<!-- /*
+* Bootstrap 5
+* Template Name: Furni
+* Template Author: Untree.co
+* Template URI: https://untree.co/
+* License: https://creativecommons.org/licenses/by/3.0/
+*/ -->
+<!doctype html>
+<html lang="en" xmlns:th = "https://www.thymeleaf.org/">
+<head th:replace="/fragments :: header">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+		  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+	<body>
+
+	<!-- Start Header/Navigation -->
+	<nav th:replace="fragments :: navigation"></nav>
+	<!-- End Header/Navigation -->
+
+		<!-- Start Hero Section -->
+			<div class="hero">
+				<div class="container">
+					<div class="row justify-content-between">
+						<div class="col-lg-5">
+							<div class="intro-excerpt">
+								<h1>Accessories for Laptop</h1>
+							</div>
+						</div>
+						<div class="col-lg-7">
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		<!-- End Hero Section -->
+
+	<!-- Start Product Section -->
+	<div class="product-section" style="margin-bottom: 30px">
+		<div class="container">
+
+			<form method="get">
+				<input style="border:none;height:40px;margin-bottom:20px;border-radius:5px;width:300px;padding:10px"
+					   type="text" placeholder="Search accessories..." id="search" name="keyword" th:value="${keyword}">
+				<button style="margin-left:10px" type="submit" class="btn btn-primary" value="search">Search</button>
+			</form>
+
+			<p class="text-center" style="font-size:30px; font-weight:500">Accessories Gaming</p>
+
+			<div class="row">
+
+				<!-- Start Column 1 -->
+				<div style="margin-top:20px" class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0"
+					 th:each="accessory : ${accessories}" th:object="${accessory}">
+					<form th:action="@{/add-item-to-cart}" method="post">
+						<a class="product-item" th:href="@{/accessories/{id}(id=*{id})}">
+							<img th:src="@{/assets/{filename}(filename=*{filename})}" alt="" class="img-fluid product-thumbnail"/>
+							<h3 class="product-title" th:text="${accessory.name}"></h3>
+							<strong class="product-price" th:text="${accessory.costPrice} + '$'"></strong>
+						</a>
+						<div class="add-to-card" style="display: flex;
+														justify-content: center;
+														align-items: center;">
+							<input type="hidden" th:value="${accessory.id}" name="id"/>
+							<input type="submit" value="Add to cart" style="background: #2f2f2f;
+																			color: white;
+																			border-radius: 5px;"/>
+						</div>
+					</form>
+				</div>
+				<!-- End Column 1 -->
+			</div>
+		</div>
+	</div>
+	<!-- End Product Section -->
+
+	<!-- Start Footer Section -->
+	<footer th:replace="fragments :: footer"></footer>
+	<!-- End Footer Section -->
+
+
+	<div th:replace="fragments :: script"></div>
+	</body>
+
+</html>

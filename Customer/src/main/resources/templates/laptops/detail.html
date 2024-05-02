@@ -1,0 +1,195 @@
+<!-- /*
+* Bootstrap 5
+* Template Name: Furni
+* Template Author: Untree.co
+* Template URI: https://untree.co/
+* License: https://creativecommons.org/licenses/by/3.0/
+*/ -->
+<!doctype html>
+<html lang="en" xmlns:th = "https://www.thymeleaf.org/">
+<head th:replace="/fragments :: header">
+</head>
+
+<body>
+<!-- Start Header/Navigation -->
+<nav th:replace="fragments :: navigation"></nav>
+<!-- End Header/Navigation -->
+
+<!-- Start Product Section -->
+<div class="product-section">
+    <div class="container" th:object="${laptop}">
+        <form th:action="@{/add-item-to-cart}" method="post">
+            <p th:text="${laptop.name}" style="font-size:25px;font-weight:bold;border-bottom: 1px solid #8080806b;
+                                            padding-bottom: 10px;">
+                [New 100%] Lenovo LOQ 2024 15IAX9 (Core i5-12450HX, 12GB, 512GB, RTX 2050 4GB, 15.6" FHD 144Hz)
+            </p>
+            <div class="detail" style="display: flex;gap: 5%;border-bottom: 1px solid #8080806b;padding-bottom: 20px;">
+                <img th:src="@{/assets/{filename}(filename=*{filename})}" alt="" style="width: 350px;">
+                <div class="detail__info">
+                    <p th:text="${laptop.costPrice} + '$'" style=" font-size: 25px; font-weight: 600;color: rebeccapurple;">
+                        17.990.000 $
+                    </p>
+                    <p th:text="'Drive: ' + ${laptop.drive}" style="font-size: 16px;">
+                       Drive: 512GB SSD M.2 2242 PCIe® 4.0x4 NVMe®
+                    </p>
+                    <p th:text="'Card: ' + ${laptop.card}" style="font-size: 16px;">
+                       Card: NVIDIA® GeForce RTX™ 2050 4GB GDDR6
+                    </p>
+                    <p th:text="'Screen: ' + ${laptop.screen}" style="font-size: 16px;">
+                       Screen: 15.6inch FHD (1920x1080) IPS 300nits Anti-glare, 100%sRGB, 144Hz
+                    </p>
+                    <p th:text="'Operating System' + ${operatingSystem}" style="font-size: 16px;">
+                      Operating system: Windows 11
+                    </p>
+                    <p style="font-size: 16px;">
+                        Webcam: HD Webcam
+                    </p>
+                    <p style="font-size: 16px;">
+                        Weight: ~2.4 kg
+                    </p>
+                    <p style="font-size: 16px;">
+                        Pin: 4-Cell, 60Wh
+                    </p>
+                    <div class="add-to-card">
+                        <input type="hidden" th:value="${laptop.id}" name="id"/>
+                        <input type="submit" value="Add to cart" style="background: #2f2f2f;
+																			color: white;
+																			border-radius: 5px;"/>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- End Product Section -->
+
+<!-- Start relate product -->
+<div class="product-section">
+    <div class="container">
+
+        <p class="text-center" style="font-size:30px; font-weight:500">Relate Laptop</p>
+
+        <div class="row">
+            <div style="margin-top:20px" class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0"
+                 th:each="relateProduct : ${relateProducts}" th:object="${relateProduct}">
+                <a class="product-item" th:href="@{/{id}(id=*{id})}">
+                    <img th:src="@{/assets/{filename}(filename=*{filename})}" alt="" class="img-fluid product-thumbnail"/>
+                    <h3 class="product-title" th:text="${relateProduct.name}"></h3>
+                    <strong class="product-price" th:text="${relateProduct.costPrice} + '$'"></strong>
+                    <span class="icon-cross">
+                        <img src="images/cross.svg" class="img-fluid">
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End relate product -->
+
+<!-- Start Testimonial Slider -->
+<div class="testimonial-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 mx-auto text-center">
+                <h2 class="section-title">Testimonials</h2>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="testimonial-slider-wrap text-center">
+
+                    <div id="testimonial-nav">
+                        <span class="prev" data-controls="prev"><span class="fa fa-chevron-left"></span></span>
+                        <span class="next" data-controls="next"><span class="fa fa-chevron-right"></span></span>
+                    </div>
+
+                    <div class="testimonial-slider">
+
+                        <div class="item">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8 mx-auto">
+
+                                    <div class="testimonial-block text-center">
+                                        <blockquote class="mb-5">
+                                            <p>&ldquo;Donec facilisis quam ut purus rutrum lobortis. Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer convallis volutpat dui quis scelerisque.&rdquo;</p>
+                                        </blockquote>
+
+                                        <div class="author-info">
+                                            <div class="author-pic">
+                                                <img src="images/person-1.png" alt="Maria Jones" class="img-fluid">
+                                            </div>
+                                            <h3 class="font-weight-bold">Maria Jones</h3>
+                                            <span class="position d-block mb-3">CEO, Co-Founder, XYZ Inc.</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END item -->
+
+                        <div class="item">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8 mx-auto">
+
+                                    <div class="testimonial-block text-center">
+                                        <blockquote class="mb-5">
+                                            <p>&ldquo;Donec facilisis quam ut purus rutrum lobortis. Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer convallis volutpat dui quis scelerisque.&rdquo;</p>
+                                        </blockquote>
+
+                                        <div class="author-info">
+                                            <div class="author-pic">
+                                                <img src="images/person-1.png" alt="Maria Jones" class="img-fluid">
+                                            </div>
+                                            <h3 class="font-weight-bold">Maria Jones</h3>
+                                            <span class="position d-block mb-3">CEO, Co-Founder, XYZ Inc.</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END item -->
+
+                        <div class="item">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8 mx-auto">
+
+                                    <div class="testimonial-block text-center">
+                                        <blockquote class="mb-5">
+                                            <p>&ldquo;Donec facilisis quam ut purus rutrum lobortis. Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer convallis volutpat dui quis scelerisque.&rdquo;</p>
+                                        </blockquote>
+
+                                        <div class="author-info">
+                                            <div class="author-pic">
+                                                <img src="images/person-1.png" alt="Maria Jones" class="img-fluid">
+                                            </div>
+                                            <h3 class="font-weight-bold">Maria Jones</h3>
+                                            <span class="position d-block mb-3">CEO, Co-Founder, XYZ Inc.</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END item -->
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Testimonial Slider -->
+
+<!-- Start Footer Section -->
+<footer th:replace="fragments :: footer"></footer>
+<!-- End Footer Section -->
+
+
+<div th:replace="fragments :: script"></div>
+</body>
+
+</html>

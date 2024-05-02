@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+
+<head th:replace="/fragments :: header">
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul th:replace="fragments :: sideBar"></ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav th:replace="fragments :: topBar"></nav>
+                <!-- End of Topbar -->
+
+                <!-- Container fluid -->
+                <div class="container-fluid">
+
+                    <div>
+                        <form th:action="@{/search-result/0}" method="get">
+                            <input style="border:none;height:40px;margin-bottom:20px;border-radius:5px;width:300px;padding:10px"
+                                   type="text" placeholder="Search laptop..." id="search" name="keyword">
+                            <button style="margin-left:10px" type="submit" class="btn btn-primary">Search</button>
+                        </form>
+                    </div>
+
+                    <div th:if="${size == 0}">
+                        <p class="text-center">No product</p>
+                    </div>
+
+                    <a style="margin-bottom:10px;" class="btn btn-primary" th:href="@{/add-laptop}">Add new product</a>
+
+                    <div th:if="${success}" class="text-center alert alert-success">
+                        <p th:text="${success}"></p>
+                    </div>
+                    <div th:if="${failed}" class=" text-center alert alert-danger">
+                        <p th:text="${failed}"></p>
+                    </div>
+
+
+                    <table class="table table-striped" th:if="${size > 0}">
+                        <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Operating system</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Laptop</th>
+                            <th scope="col">Update</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="laptop : ${laptops}" th:object="${laptop}">
+                            <th scope="row" th:text="${laptop.name}"></th>
+                            <td th:text="${laptop.operatingSystem}"></td>
+                            <td th:text="${laptop.currentQuantity}"></td>
+                            <td style="width:100px; height:100px">
+                                <a th:href="@{/assets/{filename}(filename=*{filename})}">
+                                    <img th:src="@{/assets/{filename}(filename=*{filename})}" alt="" class="img-thumbnail w-100">
+                                </a>
+                            </td>
+                            <td>
+                                <a th:href="@{/update-laptop/{id}(id=*{id})}" class="btn btn-primary">Update</a>
+                            </td>
+                            <td>
+                                <a th:if="${laptop.is_activated == false}"
+                                   th:href="@{/enable-laptop/{id}(id=*{id})}" class="btn btn-primary">Enabled</a>
+                                <a th:if="${laptop.is_deleted == false}"
+                                   th:href="@{/delete-laptop/{id}(id=*{id})}" class="btn btn-warning">Deleted</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <!--Phan trang -->
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <!--Bat dau trang 0 -->
+                            <li th:if="${currentPage !=0}" class="page-item">
+                                <a th:href="@{'/laptop/' + ${currentPage - 1}}" class="page-link">Previous</a>
+                            </li>
+                            <li th:each="i : ${#numbers.sequence(1, totalPage)}"
+                                th:classappend="${currentPage == i - 1 ? 'active' : ''}" class="page-item">
+                                <a th:href="@{'/laptop/' + ${i - 1}}" class="page-link" href="#">
+                                    <span th:text="${i}"></span>
+                                </a>
+                            </li>
+                            <li th:if="${currentPage + 1 != totalPage}" class="page-item">
+                                <a th:href="@{'/laptop/' + ${currentPage + 1}}" class="page-link">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                </div>
+                <!-- End of container fluid-->
+
+            </div>
+
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer th:replace="fragments :: footer">
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a th:replace="fragments :: scroll">
+    </a>
+
+    <!-- Logout Modal-->
+    <div th:replace="fragments :: logoutModal">
+    </div>
+
+
+    <div th:replace="fragments :: script"></div>
+    <script th:src="@{/js/categories.js}"></script>
+
+</body>
+
+</html>
