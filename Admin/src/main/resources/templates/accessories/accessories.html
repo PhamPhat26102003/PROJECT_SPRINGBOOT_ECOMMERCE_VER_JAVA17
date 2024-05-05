@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
 
-<head th:replace="/fragments :: header">
+<head th:replace="~{/fragments :: header}">
 </head>
 
 <body id="page-top">
@@ -10,7 +10,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul th:replace="fragments :: sideBar"></ul>
+        <ul th:replace="~{fragments :: sideBar}"></ul>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -20,7 +20,7 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <nav th:replace="fragments :: topBar"></nav>
+                <nav th:replace="~{fragments :: topBar}"></nav>
                 <!-- End of Topbar -->
 
                 <!-- Container fluid -->
@@ -106,7 +106,7 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <footer th:replace="fragments :: footer">
+            <footer th:replace="~{fragments :: footer}">
             </footer>
             <!-- End of Footer -->
 
@@ -117,15 +117,15 @@
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
-    <a th:replace="fragments :: scroll">
+    <a th:replace="~{fragments :: scroll}">
     </a>
 
     <!-- Logout Modal-->
-    <div th:replace="fragments :: logoutModal">
+    <div th:replace="~{fragments :: logoutModal}">
     </div>
 
 
-    <div th:replace="fragments :: script"></div>
+    <div th:replace="~{fragments :: script}"></div>
     <script th:src="@{/js/categories.js}"></script>
 
 </body>

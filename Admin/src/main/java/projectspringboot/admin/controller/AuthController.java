@@ -78,7 +78,7 @@ public class AuthController {
                 adminDto.setPassword(passwordEncoder.encode(adminDto.getPassword()));
                 adminService.save(adminDto);
                 model.addAttribute("adminDto", adminDto);
-                model.addAttribute("success", "Register successfully!!!");
+                redirectAttributes.addFlashAttribute("success", "Register successfully!!!");
                 return "redirect:/register";
             }else{
                 model.addAttribute("adminDto", adminDto);

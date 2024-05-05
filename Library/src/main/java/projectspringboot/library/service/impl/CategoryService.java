@@ -2,12 +2,12 @@ package projectspringboot.library.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import projectspringboot.library.dto.CategoryDto;
 import projectspringboot.library.model.Category;
 import projectspringboot.library.repository.ICategoryRepository;
 import projectspringboot.library.service.ICategoryService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryService implements ICategoryService {
@@ -37,16 +37,16 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public Category update(Category category) {
-        Category categoryUpdate = null;
         try{
-            categoryUpdate = categoryRepository.findById(category.getId()).get();
+            Category categoryUpdate = categoryRepository.getById(category.getId());
             categoryUpdate.setName(category.getName());
             categoryUpdate.set_activated(category.is_activated());
             categoryUpdate.set_delete(category.is_delete());
+            return categoryRepository.save(categoryUpdate);
         }catch(Exception e){
             e.printStackTrace();
+            return null;
         }
-        return categoryRepository.save(categoryUpdate);
     }
 
     @Override

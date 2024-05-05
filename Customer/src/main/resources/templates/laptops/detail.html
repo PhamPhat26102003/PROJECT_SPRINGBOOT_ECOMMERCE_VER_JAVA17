@@ -7,12 +7,12 @@
 */ -->
 <!doctype html>
 <html lang="en" xmlns:th = "https://www.thymeleaf.org/">
-<head th:replace="/fragments :: header">
+<head th:replace="~{/fragments :: header}">
 </head>
 
 <body>
 <!-- Start Header/Navigation -->
-<nav th:replace="fragments :: navigation"></nav>
+<nav th:replace="~{fragments :: navigation}"></nav>
 <!-- End Header/Navigation -->
 
 <!-- Start Product Section -->
@@ -185,11 +185,11 @@
 <!-- End Testimonial Slider -->
 
 <!-- Start Footer Section -->
-<footer th:replace="fragments :: footer"></footer>
+<footer th:replace="~{fragments :: footer}"></footer>
 <!-- End Footer Section -->
 
 
-<div th:replace="fragments :: script"></div>
+<div th:replace="~{fragments :: script}"></div>
 </body>
 
 </html>

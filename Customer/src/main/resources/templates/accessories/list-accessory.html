@@ -7,7 +7,7 @@
 */ -->
 <!doctype html>
 <html lang="en" xmlns:th = "https://www.thymeleaf.org/">
-<head th:replace="/fragments :: header">
+<head th:replace="~{/fragments :: header}">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
 		  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
@@ -15,7 +15,7 @@
 	<body>
 
 	<!-- Start Header/Navigation -->
-	<nav th:replace="fragments :: navigation"></nav>
+	<nav th:replace="~{fragments :: navigation}"></nav>
 	<!-- End Header/Navigation -->
 
 		<!-- Start Hero Section -->
@@ -75,11 +75,11 @@
 	<!-- End Product Section -->
 
 	<!-- Start Footer Section -->
-	<footer th:replace="fragments :: footer"></footer>
+	<footer th:replace="~{fragments :: footer}"></footer>
 	<!-- End Footer Section -->
 
 
-	<div th:replace="fragments :: script"></div>
+	<div th:replace="~{fragments :: script}"></div>
 	</body>
 
 </html>

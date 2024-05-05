@@ -1,9 +1,11 @@
 package projectspringboot.admin.controller;
 
+import org.hibernate.internal.util.beans.BeanInfoHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import projectspringboot.library.model.Category;
@@ -11,6 +13,7 @@ import projectspringboot.library.service.ICategoryService;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class CategoryController {
@@ -32,6 +35,13 @@ public class CategoryController {
         }
     }
 
+    @GetMapping("/add-category")
+    public String displayAddNewCategoryPage(Model model){
+        model.addAttribute("category", new Category());
+        model.addAttribute("title", "Add category");
+        return "category/addNew-category";
+    }
+
     @PostMapping("/add-category")
     public String addNewCategory(@ModelAttribute("categoryNew") Category category, RedirectAttributes redirectAttributes){
         try{
@@ -47,30 +57,34 @@ public class CategoryController {
         return "redirect:/categories";
     }
 
-    @RequestMapping(value = "/findById" , method = {RequestMethod.PUT, RequestMethod.GET})
-    @ResponseBody
-    public Category findById(Long id){
-        return categoryService.findById(id);
+    @GetMapping("/update-category/{id}")
+    public String displayUpdateCategoryPage(@PathVariable Long id, Model model){
+        Category category = categoryService.findById(id);
+        model.addAttribute("category", category);
+        model.addAttribute("title", "Update category");
+        return "category/edit-category";
     }
 
-    @GetMapping("/update-category")
-    public String updateCategory(Category category, RedirectAttributes redirectAttributes){
+    @PostMapping("/update-category/{id}")
+    public String updateCategory(Category category,
+                                 RedirectAttributes redirectAttributes,
+                                 BindingResult bindingResult,
+                                 Model model){
         try{
+            if(bindingResult.hasErrors()){
+                model.addAttribute("category", category);
+            }
             categoryService.update((category));
             redirectAttributes.addFlashAttribute("success", "Update category successfully");
-        }catch(DataIntegrityViolationException dataIntegrityViolationException){
-            dataIntegrityViolationException.printStackTrace();
-            redirectAttributes.addFlashAttribute("failed", "Failed to update because duplicate name!!!");
-        }
-        catch(Exception e){
+        }catch(Exception e){
             e.printStackTrace();
-            redirectAttributes.addFlashAttribute("failed", "Error server!!");
+            redirectAttributes.addFlashAttribute("failed", "Failed to update!!");
         }
         return "redirect:/categories";
     }
 
-    @RequestMapping(value = "/delete-category", method = {RequestMethod.PUT, RequestMethod.GET})
-    public String delete(Long id, RedirectAttributes redirectAttributes){
+    @RequestMapping(value = "/delete-category/{id}", method = {RequestMethod.PUT, RequestMethod.GET})
+    public String delete(@PathVariable("id") Long id, RedirectAttributes redirectAttributes){
         try{
             categoryService.deleteById(id);
             redirectAttributes.addFlashAttribute("success", "Delete category successfully");
@@ -81,8 +95,8 @@ public class CategoryController {
         return "redirect:/categories";
     }
 
-    @RequestMapping(value = "/enable-category", method = {RequestMethod.PUT, RequestMethod.GET})
-    public String enable(Long id, RedirectAttributes redirectAttributes){
+    @RequestMapping(value = "/enable-category/{id}", method = {RequestMethod.PUT, RequestMethod.GET})
+    public String enable(@PathVariable("id") Long id, RedirectAttributes redirectAttributes){
         try{
             categoryService.enableById(id);
             redirectAttributes.addFlashAttribute("success", "Enable success");
