@@ -45,7 +45,7 @@ public class CustomerConfig {
                         author.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                                 .requestMatchers("/*").permitAll()
                                 .requestMatchers("/shop/**").hasAuthority("CUSTOMER")
-                                .anyRequest().authenticated()
+                                .anyRequest().permitAll()
                 )
 
                 .formLogin(login ->

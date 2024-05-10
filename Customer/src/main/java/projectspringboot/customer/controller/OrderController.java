@@ -64,8 +64,8 @@ public class OrderController {
         return "redirect:/order";
     }
 
-    @RequestMapping(value = "/accept-order", method = {RequestMethod.PUT, RequestMethod.GET})
-    public String acceptOrder(Long id, Principal principal, RedirectAttributes redirectAttributes){
+    @RequestMapping(value = "/accept-order/{id}", method = {RequestMethod.PUT, RequestMethod.GET})
+    public String acceptOrder(@PathVariable("id") Long id, Principal principal, RedirectAttributes redirectAttributes){
         if(principal == null){
             return "redirect:/login";
         }
@@ -74,8 +74,8 @@ public class OrderController {
         return "redirect:/order";
     }
 
-    @RequestMapping(value = "/cancel-order", method = {RequestMethod.PUT, RequestMethod.GET})
-    public String cancelOrder(Long id, Principal principal, RedirectAttributes redirectAttributes){
+    @RequestMapping(value = "/cancel-order/{id}", method = {RequestMethod.PUT, RequestMethod.GET})
+    public String cancelOrder(@PathVariable("id") Long id, Principal principal, RedirectAttributes redirectAttributes){
         if(principal == null){
             return "redirect:/login";
         }

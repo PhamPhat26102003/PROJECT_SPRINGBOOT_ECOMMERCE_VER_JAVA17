@@ -62,8 +62,8 @@
 					<td th:text="'$' + ${order.totalPrice + 2.0}"></td>
 					<td>Cash</td>
 					<td>
-						<a th:href="@{/cancel-order/(id=${order.id})}" class="btn btn-cancel">Cancel</a>
-						<a th:href="@{/accept-order/(id=${order.id})}" class="btn btn-primary">Accept</a>
+						<a th:href="@{/cancel-order/{id}(id=${order.id})}" class="btn btn-cancel">Cancel</a>
+						<a th:href="@{/accept-order/{id}(id=${order.id})}" class="btn btn-primary">Accept</a>
 					</td>
 				</tr>
 			</tbody>
