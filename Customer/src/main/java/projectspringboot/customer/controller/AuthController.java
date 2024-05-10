@@ -28,6 +28,11 @@ public class AuthController {
     @Autowired
     private ICityService cityService;
 
+    @GetMapping("/login")
+    public String loginPage(){
+        return "login";
+    }
+
     @GetMapping("/register")
     public String registerPage(Model model){
         List<City> cities = cityService.findAll();

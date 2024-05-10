@@ -29,8 +29,14 @@ public class HomeController {
     @Autowired
     private ICustomerService customerService;
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login(Principal principal, HttpSession session){
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String homePage(@PageableDefault(size = 8)Pageable pageable,
+                           Model model,
+                           Principal principal,
+                           HttpSession session){
+        Page<Laptop> laptops = laptopRepository.findAll(pageable);
+        model.addAttribute("laptops", laptops);
+        model.addAttribute("title", "Laptop Gaming");
         if (principal != null){
             session.setAttribute("username", principal.getName());
             Customer customer = customerService.findByUsername(principal.getName());
@@ -39,14 +45,6 @@ public class HomeController {
         }else{
             session.removeAttribute("username");
         }
-        return "login";
-    }
-
-    @GetMapping("/")
-    public String homePage(@PageableDefault(size = 8)Pageable pageable, Model model){
-        Page<Laptop> laptops = laptopRepository.findAll(pageable);
-        model.addAttribute("laptops", laptops);
-        model.addAttribute("title", "Laptop Gaming");
         return "index";
     }
 }
