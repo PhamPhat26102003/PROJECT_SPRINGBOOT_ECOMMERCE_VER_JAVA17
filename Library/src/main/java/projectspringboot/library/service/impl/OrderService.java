@@ -60,7 +60,6 @@ public class OrderService implements IOrderService {
         order.setOrderDetailList(orderDetailList);
         shoppingCart.setCartItem(new HashSet<>());
         shoppingCart.setTotalPrice(0);
-        shoppingCart.setTotalPrice(0);
         shoppingCartRepository.save(shoppingCart);
         orderRepository.save(order);
         return order;

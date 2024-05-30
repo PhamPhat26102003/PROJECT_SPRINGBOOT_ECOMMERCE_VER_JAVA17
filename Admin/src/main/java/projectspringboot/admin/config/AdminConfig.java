@@ -45,6 +45,10 @@ public class AdminConfig {
                         author.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                                 .requestMatchers("/*").permitAll()
                                 .requestMatchers("/admin/**").hasAuthority("ADMIN")
+                                .requestMatchers("/admin/categories").hasAuthority("VIEW_PRODUCT")
+                                .requestMatchers("/admin/update-category/**").hasAuthority("UPDATE_PRODUCT")
+                                .requestMatchers("/admin/laptop").hasAuthority("VIEW_PRODUCT")
+                                .requestMatchers("/admin/update-laptop/**").hasAuthority("UPDATE_PRODUCT")
                                 .anyRequest().authenticated()
                 )
 
