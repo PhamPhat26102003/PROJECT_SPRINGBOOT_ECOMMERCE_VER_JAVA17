@@ -20,9 +20,9 @@ public class Role{
     @Column(name = "role_id")
     private Long id;
     private String name;
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "role_permission",
-                        joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
-    @Column(name = "permission")
-    private Set<String> permissions;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "role_permission",
+                joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"),
+                inverseJoinColumns = @JoinColumn(name = "permission_id", referencedColumnName = "permission_id"))
+   private Set<Permission> permissions;
 }

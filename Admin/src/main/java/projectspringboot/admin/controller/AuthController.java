@@ -34,7 +34,7 @@ public class AuthController {
    }
 
    @RequestMapping("/index")
-   public String indexPage(Model model, Principal principal){
+   public String indexPage(Model model){
        model.addAttribute("title", "Admin page");
        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
        if(authentication == null || authentication instanceof AnonymousAuthenticationToken){

@@ -3,6 +3,7 @@ package projectspringboot.admin.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,6 +32,7 @@ public class LaptopController {
 
     //Phan trang
     @GetMapping("/laptop/{pageNo}")
+    @PreAuthorize("hasAuthority('VIEW_PRODUCT')")
     public String pageLaptops(@PathVariable("pageNo") int pageNo, Model model, Principal principal){
         if(principal == null){
             return "redirect:/login";
@@ -109,6 +111,7 @@ public class LaptopController {
     }
 
     @PostMapping("/update-laptop/{id}")
+    @PreAuthorize("hasAuthority('UPDATE_PRODUCT')")
     public String updateLaptop( @Validated Laptop laptop,
                                Model model, BindingResult bindingResult,
                                RedirectAttributes redirectAttributes){

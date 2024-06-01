@@ -3,6 +3,7 @@ package projectspringboot.admin.config;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -43,12 +44,10 @@ public class AdminConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(author ->
                         author.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                                .requestMatchers("/*").permitAll()
                                 .requestMatchers("/admin/**").hasAuthority("ADMIN")
-                                .requestMatchers("/admin/categories").hasAuthority("VIEW_PRODUCT")
-                                .requestMatchers("/admin/update-category/**").hasAuthority("UPDATE_PRODUCT")
-                                .requestMatchers("/admin/laptop").hasAuthority("VIEW_PRODUCT")
-                                .requestMatchers("/admin/update-laptop/**").hasAuthority("UPDATE_PRODUCT")
+                                .requestMatchers(HttpMethod.PUT,"/admin/update-category").hasAuthority("UPDATE_PRODUCT")
+                                .requestMatchers(HttpMethod.PUT,"/admin/update-laptop").hasAuthority("UPDATE_PRODUCT")
+                                .requestMatchers(HttpMethod.PUT,"/admin/update-category").hasAuthority("UPDATE_PRODUCT")
                                 .anyRequest().authenticated()
                 )
 

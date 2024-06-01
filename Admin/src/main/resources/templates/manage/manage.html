@@ -46,23 +46,24 @@
                             <th scope="col">ID</th>
                             <th scope="col">Name</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Permission</th>
+                            <th scope="col">Role</th>
                             <th scope="col">Update</th>
                             <th scope="col">Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="category : ${categories}" th:object="${category}">
-                            <th scope="row" th:text="${category.id}"></th>
-                            <td th:text="${category.name}"></td>
-                            <td>
-                                <a th:href="@{/update-account/{id}(id=*{id})}" class="btn btn-primary">Update</a>
+                        <tr th:each="admin : ${admins}" th:object="${admin}">
+                            <th scope="row" th:text="${admin.id}"></th>
+                            <td th:text="${admin.lastName}"></td>
+                            <td th:text="${admin.username}"></td>
+                            <td th:each="role : ${admin.roles}">
+                                <span th:text="${role.name}"></span>
                             </td>
                             <td>
-                                <a th:if="${category.is_delete} == false"
-                                   th:href="@{/delete-category/{id}(id=*{id})}" class="btn btn-warning">Deleted</a>
-                                <a th:if="${category.is_activated} == false"
-                                   th:href="@{/enable-category/{id}(id=*{id})}" class="btn btn-primary">Enabled</a>
+
+                            </td>
+                            <td>
+
                             </td>
                         </tr>
                         </tbody>

@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import projectspringboot.library.model.Admin;
+import projectspringboot.library.model.Permission;
 import projectspringboot.library.model.Role;
 import projectspringboot.library.repository.IAdminRepository;
 
@@ -28,8 +29,8 @@ public class AdminServiceConfig implements UserDetailsService {
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         for(Role role : admin.getRoles()){
-            for(String permission : role.getPermissions()){
-                grantedAuthorities.add(new SimpleGrantedAuthority(permission));
+            for(Permission permission : role.getPermissions()){
+                grantedAuthorities.add(new SimpleGrantedAuthority(permission.getName()));
             }
         }
         return new User(

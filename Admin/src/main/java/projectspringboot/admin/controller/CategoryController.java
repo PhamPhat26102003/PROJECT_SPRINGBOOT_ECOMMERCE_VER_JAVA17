@@ -3,6 +3,7 @@ package projectspringboot.admin.controller;
 import org.hibernate.internal.util.beans.BeanInfoHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,6 +22,7 @@ public class CategoryController {
     private ICategoryService categoryService;
 
     @GetMapping("/categories")
+    @PreAuthorize("hasAuthority('VIEW_PRODUCT')")
     public String categories(Model model, Principal principal){
         if(principal == null){
             return "redirect:/login";
@@ -58,6 +60,7 @@ public class CategoryController {
     }
 
     @GetMapping("/update-category/{id}")
+    @PreAuthorize("hasAuthority('UPDATE_PRODUCT')")
     public String displayUpdateCategoryPage(@PathVariable Long id, Model model){
         Category category = categoryService.findById(id);
         model.addAttribute("category", category);
