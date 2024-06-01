@@ -38,8 +38,8 @@ public class HomeController {
         model.addAttribute("laptops", laptops);
         model.addAttribute("title", "Laptop Gaming");
         if (principal != null){
-            session.setAttribute("username", principal.getName());
             Customer customer = customerService.findByUsername(principal.getName());
+            session.setAttribute("username", customer.getFirstName() + ' ' + customer.getLastName());
             ShoppingCart shoppingCart = customer.getShoppingCart();
             session.setAttribute("totalItem", shoppingCart.getTotalItem());
         }else{

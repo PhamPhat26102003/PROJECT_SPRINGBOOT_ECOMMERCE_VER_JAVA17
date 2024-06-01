@@ -16,6 +16,8 @@ public class ShoppingCartService implements IShoppingCartService {
     private IShoppingCartRepository shoppingCartRepository;
     @Autowired
     private ICartItemRepository cartItemRepository;
+
+    //Chức năng lưu sản phẩm vào giỏ hàng bao gồm các thông tin: Id, tên, hình ảnh, số lượng tồn
     @Override
     public ShoppingCart addItemToCart(Laptop laptop, int quantity, Customer customer) {
         ShoppingCart cart = customer.getShoppingCart();
