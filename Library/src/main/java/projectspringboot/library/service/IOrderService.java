@@ -12,4 +12,5 @@ public interface IOrderService {
     Order saveOrder(ShoppingCart shoppingCart);
     Order acceptOrder(Long id);
     void cancelOrder(Long id);
+    int checkQuantity(Long id);
 }

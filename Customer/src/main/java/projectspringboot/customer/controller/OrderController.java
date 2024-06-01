@@ -65,7 +65,9 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/accept-order/{id}", method = {RequestMethod.PUT, RequestMethod.GET})
-    public String acceptOrder(@PathVariable("id") Long id, Principal principal, RedirectAttributes redirectAttributes){
+    public String acceptOrder(@PathVariable("id") Long id,
+                              Principal principal,
+                              RedirectAttributes redirectAttributes){
         if(principal == null){
             return "redirect:/login";
         }
@@ -82,5 +84,11 @@ public class OrderController {
         orderService.cancelOrder(id);
         redirectAttributes.addFlashAttribute("success", "Cancel order success");
         return "redirect:/order";
+    }
+
+    @GetMapping("/laptop/{id}/quantity")
+    public Integer checkQuantity(@PathVariable Long id){
+        int quantity = orderService.checkQuantity(id);
+        return quantity;
     }
 }

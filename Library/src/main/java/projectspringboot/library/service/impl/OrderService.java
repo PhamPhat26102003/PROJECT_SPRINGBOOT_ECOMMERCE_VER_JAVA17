@@ -1,9 +1,11 @@
 package projectspringboot.library.service.impl;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import projectspringboot.library.model.*;
 import projectspringboot.library.repository.*;
+import projectspringboot.library.service.ILaptopService;
 import projectspringboot.library.service.IOrderService;
 
 import java.util.ArrayList;
@@ -23,6 +25,8 @@ public class OrderService implements IOrderService {
     private ICartItemRepository cartItemRepository;
     @Autowired
     private ICustomerRepository customerRepository;
+    @Autowired
+    private ILaptopRepository laptopRepository;
 
     @Override
     public List<Order> findAll(String username) {
@@ -48,6 +52,12 @@ public class OrderService implements IOrderService {
         List<OrderDetail> orderDetailList = new ArrayList<>();
 
         for(CartItem item : shoppingCart.getCartItem()){
+            Laptop laptop = laptopRepository.getById(item.getLaptop().getId());
+            if(laptop.getCurrentQuantity() < item.getQuantity()){
+                throw new RuntimeException("Not enough quantity in stock!!!");
+            }
+            laptop.setCurrentQuantity(laptop.getCurrentQuantity() - item.getQuantity());
+            laptopRepository.save(laptop);
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.setOrder(order);
             orderDetail.setQuantity(item.getQuantity());
@@ -65,6 +75,7 @@ public class OrderService implements IOrderService {
         return order;
     }
 
+    @Transactional
     @Override
     public Order acceptOrder(Long id) {
         Order order = orderRepository.getById(id);
@@ -76,6 +87,18 @@ public class OrderService implements IOrderService {
 
     @Override
     public void cancelOrder(Long id) {
-        orderRepository.deleteById(id);
+        Order order = orderRepository.getById(id);
+        for(OrderDetail item : order.getOrderDetailList()){
+            Laptop laptop = item.getLaptop();
+            laptop.setCurrentQuantity(laptop.getCurrentQuantity() + item.getQuantity());
+            laptopRepository.save(laptop);
+        }
+        orderRepository.delete(order);
+    }
+
+    @Override
+    public int checkQuantity(Long id) {
+        Laptop laptop = laptopRepository.getById(id);
+        return laptop.getCurrentQuantity();
     }
 }
