@@ -40,6 +40,7 @@ public class OrderService implements IOrderService {
         return orderRepository.findAll();
     }
 
+    //Order và cập nhật số lượng hàng trong kho, số lươn hàng trong kho sẽ giảm
     @Override
     public Order saveOrder(ShoppingCart shoppingCart) {
         Order order = new Order();
@@ -75,6 +76,7 @@ public class OrderService implements IOrderService {
         return order;
     }
 
+    //Complete order thay đổi trangj thái của đơn hàng
     @Transactional
     @Override
     public Order acceptOrder(Long id) {
@@ -85,6 +87,7 @@ public class OrderService implements IOrderService {
         return orderRepository.save(order);
     }
 
+    //Cancel order hủy order và trả về số lợng hàng ban đầu
     @Override
     public void cancelOrder(Long id) {
         Order order = orderRepository.getById(id);
@@ -96,6 +99,7 @@ public class OrderService implements IOrderService {
         orderRepository.delete(order);
     }
 
+    //Lấy số lượng hàng
     @Override
     public int checkQuantity(Long id) {
         Laptop laptop = laptopRepository.getById(id);
